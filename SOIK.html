@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kalkulator</title>
+  <style>
+    :root {
+      --bg: #222;
+      --text: #0f0;
+      --button: #333;
+      --button-hover: #555;
+      --operator: #fe9505;
+      --operator-hover: #ffa733;
+      --equal: #0abde3;
+      --equal-hover: #33c5ec;
+      --clear: #ee5253;
+      --clear-hover: #ff6b6b;
+      --font: 'Segoe UI', sans-serif;
+
+      --display-bg: #111;
+      --display-text: #0f0;
+    }
+
+    body.light {
+      --bg: #f1f1f1;
+      --text: #222;
+      --button: #ddd;
+      --button-hover: #bbb;
+      --operator: #ff9f43;
+      --operator-hover: #ffb661;
+      --equal: #00cec9;
+      --equal-hover: #55efc4;
+      --clear: #d63031;
+      --clear-hover: #ff7675;
+
+      --display-bg: #fff;
+      --display-text: #000;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      background: var(--bg);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      width: 320px;
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .display {
+      background: var(--display-bg);
+      color: var(--display-text);
+      font-size: 2rem;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: right;
+      overflow-x: auto;
+      height: 60px;
+      white-space: nowrap;
+      direction: ltr;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    button {
+      font-size: 1.5rem;
+      padding: 20px;
+      border: none;
+      border-radius: 10px;
+      background: var(--button);
+      color: var(--text);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--button-hover);
+    }
+
+    button.operator {
+      background: var(--operator);
+      color: #fff;
+    }
+
+    button.operator:hover {
+      background: var(--operator-hover);
+    }
+
+    button.equal {
+      background: var(--equal);
+      color: #fff;
+      grid-column: span 2;
+    }
+
+    button.equal:hover {
+      background: var(--equal-hover);
+    }
+
+    button.clear {
+      background: var(--clear);
+      color: #fff;
+    }
+
+    button.clear:hover {
+      background: var(--clear-hover);
+    }
+
+    .theme-toggle {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .theme-toggle button {
+      background: transparent;
+      border: 2px solid var(--equal);
+      color: var(--equal);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 1rem;
+      transition: 0.3s ease;
+    }
+
+    .theme-toggle button:hover {
+      background: var(--equal);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="appendValue('(')">(</button>
+      <button onclick="appendValue(')')">)</button>
+      <button class="operator" onclick="appendValue('÷')">÷</button>
+
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button class="operator" onclick="appendValue('×')">×</button>
+
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button class="operator" onclick="appendValue('-')">−</button>
+
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button class="operator" onclick="appendValue('+')">+</button>
+
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button onclick="deleteOne()">⌫</button>
+      <button class="equal" onclick="calculateResult()">=</button>
+    </div>
+    <div class="theme-toggle">
+      <button onclick="toggleTheme()">🌙 Toggle Dark/Light ☀️</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function scrollDisplayToEnd() {
+      display.scrollLeft = display.scrollWidth;
+    }
+
+    function appendValue(val) {
+      if (display.innerText === "0" || display.innerText === "Error") {
+        display.innerText = val;
+      } else {
+        display.innerText += val;
+      }
+      scrollDisplayToEnd();
+    }
+
+    function clearDisplay() {
+      display.innerText = "0";
+    }
+
+    function deleteOne() {
+      let current = display.innerText;
+      if (current.length === 1 || current === "Error") {
+        display.innerText = "0";
+      } else {
+        display.innerText = current.slice(0, -1);
+      }
+      scrollDisplayToEnd();
+    }
+
+    function calculateResult() {
+      try {
+        const input = display.innerText
+          .replace(/÷/g, "/")
+          .replace(/×/g, "*")
+          .replace(/−/g, "-");
+        const result = eval(input);
+        display.innerText = result;
+      } catch (e) {
+        display.innerText = "Error";
+      }
+      scrollDisplayToEnd();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+    }
+  </script>
+</body>
+</html>
