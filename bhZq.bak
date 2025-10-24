@@ -1,0 +1,276 @@
+// CLI
+
+const axios = require('axios');
+const cheerio = require('cheerio');
+const fs = require('fs').promises;
+const fsSync = require('fs');
+const FormData = require('form-data');
+
+const BASE_URL = 'https://nimegami.id';
+const CATBOX_API_URL = 'https://catbox.moe/user/api.php';
+
+const fetchHTML = async (url) => {
+    try {
+        const { data } = await axios.get(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+        });
+        return data;
+    } catch (error) {
+        console.error(`Error fetching URL: ${url}`, error.message);
+        return null;
+    }
+};
+
+const scrapeListPage = async (url) => {
+    const html = await fetchHTML(url);
+    if (!html) return [];
+    const $ = cheerio.load(html);
+    const results = [];
+
+    $('.post-article article, .archive-a article').each((i, el) => {
+        const title = $(el).find('h2 a').text().trim();
+        const detailUrl = $(el).find('h2 a').attr('href');
+        const thumbnail = $(el).find('.thumbnail img, .thumb img').attr('src');
+        const rating = $(el).find('.rating, .rating-archive').text().trim().replace(/\s/g, '') || null;
+        const episode = $(el).find('.eps-archive').text().trim() || null;
+
+        results.push({
+            title,
+            detailUrl,
+            thumbnail,
+            rating,
+            episode,
+        });
+    });
+
+    return results;
+};
+
+const scrapeOngoing = async () => {
+    const url = `${BASE_URL}/anime-terbaru-sub-indo/`;
+    const html = await fetchHTML(url);
+    if (!html) return {};
+    const $ = cheerio.load(html);
+    const ongoingData = {};
+
+    $('.rilis_ongoing .wrapper-3').each((i, dayElement) => {
+        const day = $(dayElement).find('h3.title').text().trim();
+        const animeList = [];
+
+        $(dayElement).find('article').each((j, animeElement) => {
+            const title = $(animeElement).find('h3 a').text().trim();
+            const detailUrl = $(animeElement).find('h3 a').attr('href');
+            const thumbnail = $(animeElement).find('.thumb img').attr('src');
+            const episode = $(animeElement).find('.eps_ongo').text().trim();
+            
+            animeList.push({
+                title,
+                detailUrl,
+                thumbnail,
+                latestEpisode: episode
+            });
+        });
+        if(day && animeList.length > 0) {
+            ongoingData[day.toLowerCase()] = animeList;
+        }
+    });
+
+    return ongoingData;
+};
+
+const scrapeDetail = async (url) => {
+    const html = await fetchHTML(url);
+    if (!html) return null;
+    const $ = cheerio.load(html);
+    const detail = {};
+
+    detail.title = $('h1.title').text().trim();
+    detail.thumbnail = $('.coverthumbnail img').attr('src');
+    detail.synopsis = $('#Sinopsis p').map((i, el) => $(el).text().trim()).get().join('\n');
+    detail.trailer = $('.trailer iframe').attr('src') || null;
+
+    const info = {};
+    $('.info2 table tr').each((i, el) => {
+        const labelText = $(el).find('td.tablex').text();
+        const key = labelText.split(':')[0].trim().toLowerCase().replace(/[\s/]+/g, '_');
+        const value = $(el).find('td:not(.tablex)').text().trim();
+        if (key && value) {
+            info[key] = value;
+        }
+    });
+    detail.information = info;
+
+    const streamEpisodes = [];
+    $('.streaming_eps_box .list_eps_stream li').each((i, el) => {
+        const episodeTitle = $(el).attr('title');
+        const base64Data = $(el).attr('data');
+        if (base64Data) {
+            try {
+                const decodedData = Buffer.from(base64Data, 'base64').toString('utf-8');
+                const streamLinks = JSON.parse(decodedData);
+                streamEpisodes.push({
+                    episode: episodeTitle,
+                    streams: streamLinks.map(link => ({ resolution: link.format, url: link.url[0] }))
+                });
+            } catch (e) {}
+        }
+    });
+    detail.stream_episodes = streamEpisodes;
+    
+    const downloadLinks = {};
+    const batchLinks = [];
+    $('.batch-dlcuy ul li').each((i, el) => {
+        const resolution = $(el).find('strong').text().trim();
+        const links = [];
+        $(el).find('a').each((j, linkEl) => {
+            links.push({
+                provider: $(linkEl).text().trim(),
+                url: $(linkEl).attr('href')
+            });
+        });
+        batchLinks.push({ resolution, links });
+    });
+    if (batchLinks.length > 0) {
+        downloadLinks.batch = batchLinks;
+    }
+
+    const perEpisodeLinks = [];
+    $('.download_box .download > h4').each((i, el) => {
+        const episodeTitle = $(el).text().trim();
+        const linksByRes = [];
+        $(el).next('ul').find('li').each((j, liEl) => {
+             const resolution = $(liEl).find('strong').text().trim();
+             const links = [];
+             $(liEl).find('a').each((k, aEl) => {
+                 links.push({
+                     provider: $(aEl).text().trim(),
+                     url: $(aEl).attr('href')
+                 });
+             });
+             linksByRes.push({resolution, links});
+        });
+        perEpisodeLinks.push({
+            episode: episodeTitle,
+            links: linksByRes
+        });
+    });
+    
+    if (perEpisodeLinks.length > 0) {
+        downloadLinks.per_episode = perEpisodeLinks;
+    }
+    
+    detail.download_links = downloadLinks;
+
+    return detail;
+};
+
+const scrapeMultipleGenres = async (genres, limit = 5) => {
+    const allGenresData = {};
+    for (const genre of genres) {
+        console.log(`- Scraping genre: ${genre}...`);
+        const genreUrl = `${BASE_URL}/category/${genre}/`;
+        const animeList = await scrapeListPage(genreUrl);
+        allGenresData[genre] = animeList.slice(0, limit);
+    }
+    return allGenresData;
+};
+
+const uploadToCatbox = async (filePath) => {
+    try {
+        const form = new FormData();
+        form.append('reqtype', 'fileupload');
+        form.append('fileToUpload', fsSync.createReadStream(filePath));
+
+        const response = await axios.post(CATBOX_API_URL, form, {
+            headers: { ...form.getHeaders() }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`  [Error] Gagal mengunggah ${filePath}.`);
+        return null;
+    }
+};
+
+const main = async () => {
+    const finalResults = [];
+    const filesToCleanup = [];
+    
+    console.log('Memulai proses scraping dan upload...');
+
+    const ongoingData = await scrapeOngoing();
+    if(Object.keys(ongoingData).length > 0) {
+        const fileName = 'ongoing.json';
+        console.log('\n[1/4] Membuat ongoing.json...');
+        await fs.writeFile(fileName, JSON.stringify(ongoingData, null, 2));
+        filesToCleanup.push(fileName);
+        console.log(`  Mengunggah ${fileName}...`);
+        const url = await uploadToCatbox(fileName);
+        if(url) finalResults.push({ type: 'ongoing', url });
+    }
+
+    const genresToScrape = ['romance', 'school', 'harem', 'slice-of-life'];
+    const genresData = await scrapeMultipleGenres(genresToScrape, 5);
+     if(Object.keys(genresData).length > 0) {
+        const fileName = 'genres.json';
+        console.log('\n[2/4] Membuat genres.json...');
+        await fs.writeFile(fileName, JSON.stringify(genresData, null, 2));
+        filesToCleanup.push(fileName);
+        console.log(`  Mengunggah ${fileName}...`);
+        const url = await uploadToCatbox(fileName);
+        if(url) finalResults.push({ type: 'genres', genres_scraped: genresToScrape, url });
+    }
+
+    const searchQuery = 'Alya';
+    const searchUrl = `${BASE_URL}/?s=${encodeURIComponent(searchQuery)}&post_type=post`;
+    const searchData = await scrapeListPage(searchUrl);
+    if(searchData.length > 0) {
+        const fileName = 'search_results.json';
+        console.log(`\n[3/4] Membuat ${fileName} untuk pencarian "${searchQuery}"...`);
+        await fs.writeFile(fileName, JSON.stringify(searchData, null, 2));
+        filesToCleanup.push(fileName);
+        console.log(`  Mengunggah ${fileName}...`);
+        const url = await uploadToCatbox(fileName);
+        if(url) finalResults.push({ type: 'search', query: searchQuery, url });
+    }
+    
+    const detailUrl = 'https://nimegami.id/tokidoki-bosotto-russia-go-de-dereru-tonari-no-alya-san-sub-indo/';
+    const detailData = await scrapeDetail(detailUrl);
+    if(detailData) {
+        const fileName = 'detail.json';
+        console.log('\n[4/4] Membuat detail.json...');
+        await fs.writeFile(fileName, JSON.stringify(detailData, null, 2));
+        filesToCleanup.push(fileName);
+        console.log(`  Mengunggah ${fileName}...`);
+        const url = await uploadToCatbox(fileName);
+        if(url) finalResults.push({ type: 'detail', source_url: detailUrl, url });
+    }
+
+    console.log('\nMembersihkan file lokal...');
+    for (const file of filesToCleanup) {
+        await fs.unlink(file);
+    }
+
+    console.log('\n--- PROSES SELESAI ---');
+    console.log('URL file JSON yang berhasil diunggah ke Catbox:');
+    console.log(JSON.stringify(finalResults, null, 2));
+};
+
+main();
+
+// KODE DIATAS ADALAH KODE YANG NANTI KAMU GUNAKAN 
+
+
+Saat ini kita kerjakann bagian ongoing dan search dulu, tapii, cover ambil dari anisearch, bagian yang ukuran 600, untuk cover, jadi jangan ambil dari nimegami.id, tapi dari anisearch covernya, faham? Kerjakan coba terserah yg cepet aja apa 
+Tapi di anisearch gabakal muncul kalau ada sub indo nya, jadi hanya judulnya tanpa sub indo hrsnya 
+
+Mungkin kita pakai express, sama seperti tadi, CAT EOF
+
+JANGAN ULANGIN, LNGSUNG GABUNG FRONTEND NYA YANG TADI GAUSAH DARI AWAL LANGSUNG TIMPA AJA, BANNER AMBIL DARI ANISEARCH, COVER CARD ANIME JUGA DARI ANISEARCH, BENER BENER BERFUNGSI, SEMENTARA CUMA MENAMPILKAN DULU AJA
+
+
+Anisearch : https://www.anisearch.com/search?q=Tokidoki%20Bosotto%20Russia-go%20de%20Dereru%20Tonari%20no%20Alya-san
+
+
+Sekalian pas anime nya di klik masuk ke detail anime, simple aja dlu , terus pas loading, kasih placeholder card anime bentuknya sama persis + banner  nya juga, card + banner nya dikasih efek shimmer tipis biar keren
