@@ -1,0 +1,199 @@
+Glosarium
+Ini adalah glosarium dengan istilah umum yang digunakan di dalam kelas. Anda dapat membaca sekilas materi ini untuk mengenali istilah-istilah umum yang ada di modul kelas ini. Selain itu, Anda juga dapat mengunjungi kembali halaman ini setiap kali menemukan istilah yang belum dimengerti. Carilah istilah tersebut pada laman glosarium ini untuk mengidentifikasi makna atau definisinya. Jika masih terdapat kosakata yang tidak Anda pahami dan belum masuk di daftar ini, Anda dapat memberikan saran melalui fitur Laporan Materi.
+
+
+
+A
+Artificial Intelligence
+
+Kemampuan komputer untuk bertindak seperti manusia.
+
+
+B
+Blockchain
+
+Blockchain adalah catatan transaksi digital. Nama “blockchain” berasal dari strukturnya, di mana catatan individu (disebut sebagai block) dihubungkan bersama dalam daftar tunggal (disebut sebagai chain). Blockchain digunakan untuk mencatat transaksi yang dilakukan dengan cryptocurrency, seperti Bitcoin, dll.
+
+
+C
+Cache
+
+Cache (diucapkan "cash"), menyimpan informasi yang baru saja digunakan sehingga dapat diakses dengan cepat di lain waktu.
+
+Cloud
+
+Dalam dunia IT, cloud mengacu pada server yang diakses melalui Internet, serta perangkat lunak dan database yang berjalan di server tersebut.
+
+Compliance
+
+Dalam tata kelola perusahaan, compliance berarti mengikuti suatu spesifikasi, standar, atau hukum yang telah diatur dengan jelas yang biasanya diterbitkan oleh lembaga atau organisasi yang berwenang dalam suatu bidang tertentu.
+
+
+D
+Database
+
+Struktur data yang menyimpan informasi yang terorganisir.
+
+Deploy
+
+Dalam konteks IT, deploy merujuk pada semua proses yang terlibat dalam mendapatkan software atau hardware rilis dan berjalan dengan baik, termasuk instalasi, konfigurasi, pengoperasian, pengujian, dan membuat perubahan yang diperlukan.
+
+
+
+E
+Entitas
+
+Satu objek unik di dunia nyata. Ia mengacu pada individu, organisasi, produk, atau komponen sistem.
+
+Exabyte
+
+Exabyte adalah 1018 atau 1.000.000.000.000.000.000 byte. 1 exabyte sama dengan 1.000 petabyte.
+
+
+H
+Hard Drive
+
+Hard drive adalah tempat menyimpan semua data Anda. Data tersebut disimpan secara magnetis, sehingga tetap berada di drive bahkan setelah daya dimatikan. Istilah "hard drive" sebenarnya adalah singkatan dari "hard disk drive", keduanya merujuk pada arti yang sama.
+
+Hypervisor
+
+Program perangkat lunak yang mengelola satu atau lebih mesin virtual. Hypervisor digunakan untuk membuat, memulai, menghentikan, dan mengatur ulang VM.
+
+
+I
+Instance
+
+Instance adalah server virtual di AWS Cloud.
+
+
+L
+Latensi
+
+Waktu yang diperlukan untuk mengirim dan menerima data.
+
+
+M
+Machine Learning
+
+Sebuah jenis dari Artificial Intelligence yang dapat "belajar" atau beradaptasi dari waktu ke waktu.
+
+
+O
+On-premise
+
+Penyimpanan dan pemeliharaan data di server lokal atau pribadi.
+
+
+P
+Permission
+
+Permission diartikan sebagai memberikan persetujuan atau otorisasi atau mengizinkan seseorang untuk melakukan sesuatu. Pada konteks AWS, permission memungkinkan Anda untuk menentukan akses ke sumber daya AWS.
+
+Petabyte
+
+Petabyte adalah 1015 atau 1.000.000.000.000.000 byte. 1 petabyte sama dengan 1.000 terabyte.
+
+
+S
+Sumber Daya
+
+Di AWS, sumber daya (resource) berarti entitas yang dapat Anda pakai, contohnya Amazon EC2 instance atau Amazon S3 bucket.
+
+
+T
+Terabyte
+
+Terabyte adalah 1012 atau 1.000.000.000.000 byte. 1 terabyte sama dengan 1.000 gigabyte.
+
+Throughput
+
+Jumlah data yang dapat dikirim dalam waktu tertentu.
+
+
+W
+Web Hosting
+
+Web Hosting menyimpan semua halaman website Anda dan membuatnya tersedia untuk komputer yang terhubung ke Internet.
+
+Merangkum definisi kerja AWS.
+Memaparkan perbedaan antara on-premise (lokal), hybrid, dan cloud sepenuhnya.
+Menjelaskan dasar-dasar infrastruktur global AWS Cloud.
+Menguraikan 6 (enam) manfaat AWS Cloud.
+Mendeskripsikan dan memberikan contoh layanan utama AWS, termasuk komputasi, jaringan, database, dan penyimpanan.
+Mengidentifikasi solusi yang sesuai menggunakan layanan AWS Cloud dengan berbagai kasus penggunaan.
+Menerangkan AWS Well-Architected Framework.
+Menguraikan dan menjelaskan shared responsibility model (model tanggung jawab bersama).
+Menggambarkan layanan keamanan utama dalam AWS Cloud.
+Menjelaskan dasar-dasar migrasi AWS Cloud.
+Menjelaskan manfaat finansial dari AWS Cloud untuk manajemen biaya organisasi/perusahaan.
+Menentukan penagihan utama, pengelolaan akun, dan model harga.
+Memaparkan cara penggunaan pricing tools (alat penetapan harga) yang dapat menghemat layanan AWS.
+Metode Apa Saja Yang Akan Kita Gunakan?
+
+Ada berbagai metode pembelajaran yang digunakan dalam kelas ini, di antaranya:
+
+Teori, berisi materi pembahasan yang mudah dipahami tentang AWS.
+Quiz, berupa soal yang bertujuan untuk menguji pemahaman Anda.
+Exam, mencakup soal-soal yang bertujuan untuk menguji pemahaman Anda setelah mempelajari keseluruhan kelas. Ini merupakan syarat kelulusan kelas.
+
+Dalam dunia komputasi, client dapat berupa web browser atau aplikasi yang dapat membuat permintaan ke server. Sebuah server dapat berupa layanan seperti Amazon Elastic Compute Cloud (Amazon EC2).
+
+Sementara on-premise mengacu pada penyimpanan dan pemeliharaan data di server lokal atau pribadi.
+
+Lanjut ke prinsip berikutnya, yaitu pay for what you need (bayar untuk apa yang Anda butuhkan). Misal ketika Anda membutuhkan sebuah instance atau mungkin barista, cukup dengan klik sebuah tombol ajaib segera mereka pun seketika tersedia untuk Anda. Dan ketika tak membutuhkannya, klik tombol lagi kemudian mereka akan pergi sesaat kemudian sehingga Anda tak perlu membayarnya lagi.
+
+Prinsip ini menjadi nilai utama di AWS. Itulah alasan sebenarnya kelas ini dihadirkan, yakni untuk membantu Anda memahami bagaimana AWS dibangun untuk membantu Anda menjalankan bisnis dengan lebih baik.
+
+Namun, kenapa internet disimbolkan dengan awan? Nah, menurut newyorker.com, simbol awan dipakai karena merepresentasikan keberadaan data kita ada di suatu tempat di luar sana, mengambang, melayang, nirkabel, tersedia di mana saja dan kapan saja ketika kita membutuhkannya. Istilah awan juga menarik karena merupakan kebalikan dari dunia material yang riil seperti colokan, kabel, hard disk, dsb [2].
+
+Sekarang, apa yang dimaksud dengan cloud computing? Menurut AWS, cloud computing--di kelas ini kita menyebutnya dengan komputasi cloud--adalah penggunaan sesuai kebutuhan (on-demand) sumber daya IT melalui internet dengan harga sesuai pemakaian (pay-as-you-go) [3]. Mari kita uraikan definisi tersebut.
+
+Penggunaan sesuai kebutuhan, ini menunjukkan bahwa AWS memiliki sumber daya yang Anda butuhkan kapan pun dan di mana pun. Tak perlu memberi tahu AWS kapan Anda akan membutuhkannya.
+Jika tiba-tiba Anda membutuhkan 300 server virtual, lakukan beberapa klik saja dan mereka pun akan langsung tersedia.
+
+Demikian pula ketika Anda membutuhkan penyimpanan sebesar 2000 terabyte misalnya, silakan gunakan penyimpanan tersebut sesuai kebutuhan. Saat tidak membutuhkannya lagi, klik untuk melepasnya. Semudah itu. Fleksibilitas semacam ini tak mungkin Anda dapatkan di data center on-premise (lokal).
+
+Sumber daya IT sebenarnya adalah bagian besar dari filosofi AWS. AWS memiliki ratusan layanan unggulan. Mengapa begitu banyak? Jawabannya sangat sederhana: karena bisnis membutuhkannya. Di AWS pun ada beberapa sumber daya IT yang sudah umum digunakan di sejumlah perusahaan.
+Contohnya begini. Anggaplah Anda menggunakan database (basis data) MySQL di perusahaan tempat Anda bekerja.
+
+Manfaat dari Komputasi Cloud
+Ada beberapa hal yang perlu Anda pertimbangkan agar semakin yakin untuk memilih komputasi cloud sebagai solusi yang dapat menangani kebutuhan Anda dibandingkan dengan data center on-premise. Mari kita uraikan:
+
+Ubah pengeluaran di muka menjadi pengeluaran variabel
+Pengeluaran di muka (upfront expense) mengacu pada data center, server fisik, dan sumber daya lain yang perlu Anda investasikan sebelum Anda menggunakannya. Sedangkan pengeluaran variabel (variable expense) berarti Anda hanya membayar untuk sumber daya komputasi yang Anda konsumsi.
+
+Dengan mengambil pendekatan komputasi cloud yang menawarkan keuntungan biaya variabel, perusahaan dapat mengimplementasikan solusi inovatif sekaligus menghemat biaya.
+
+Hentikan biaya pengelolaan dan pemeliharaan data center
+Komputasi di data center sering kali mengharuskan Anda untuk mengeluarkan lebih banyak biaya dan waktu untuk mengelola infrastruktur dan server.
+
+Nah, dengan komputasi cloud, Anda tak perlu lagi khawatir akan tugas-tugas ini. Dengan begitu, Anda dapat lebih fokus pada aplikasi dan pelanggan Anda.
+
+Berhenti menebak kapasitas
+Dengan komputasi cloud, Anda tak perlu memprediksi berapa banyak kapasitas infrastruktur yang Anda perlukan sebelum men-deploy aplikasi.
+
+Misalnya, Anda dapat meluncurkan Amazon EC2 instance dan cukup membayar untuk waktu komputasi yang digunakan. Daripada harus membayar sumber daya yang tak terpakai atau berurusan dengan kapasitas yang terbatas, dengan komputasi cloud, Anda dapat menggunakan kapasitas sesuai keinginan.
+
+Bahkan Anda juga dapat melakukan proses scale in (mengurangi) atau scale out (memperbanyak) kapasitas sesuai permintaan.
+
+Manfaatkan skala ekonomi yang masif
+Dengan menggunakan komputasi cloud, Anda dapat mewujudkan biaya variabel yang lebih rendah daripada yang dapat Anda peroleh dari data center on-premise.
+
+Penggunaan dari ratusan ribu pelangganlah yang memungkinkan AWS dapat mencapai skala ekonomi (economies of scale) yang lebih tinggi. Kemudian skala ekonomi ini diterjemahkan ke dalam harga pay-as-you-go yang lebih murah.
+
+Tingkatkan kecepatan dan ketangkasan
+Fleksibilitas dari penggunaan komputasi cloud memudahkan Anda untuk mengembangkan dan men-deploy aplikasi.
+
+Dengan komputasi cloud, Anda memiliki lebih banyak waktu untuk bereksperimen dan berinovasi. Tentu ini tak bisa Anda lakukan jika menggunakan data center on-premise. Misal untuk mendapatkan sumber daya baru, mungkin Anda memerlukan waktu berminggu-minggu. Sedangkan dengan AWS, sumber daya baru akan langsung siap diakses dalam hitungan menit.
+
+Mendunia dalam hitungan menit
+AWS Cloud memungkinkan Anda dapat meluncurkan aplikasi ke pelanggan di seluruh dunia dengan cepat sekaligus memberikan latensi yang rendah. Ini berarti meskipun Anda berada di belahan dunia yang berbeda dengan pelanggan, mereka tetap dapat mengakses aplikasi dengan waktu tunda (delay) yang minimal.
+
+Ikhtisar
+Perkenalkan, modul ikhtisar. Ia akan hadir pada setiap akhir modul yang berisi ringkasan/kesimpulan dari materi yang dipelajari. Anggaplah modul ini sebagai kilas balik untuk mempertajam pemahaman Anda. Mari kita uraikan:
+
+Pertama, kita telah berkenalan dengan skenario kedai kopi yang akan terus dipakai di setiap modul pada kelas ini. 
+Kita juga sudah belajar tentang komputasi cloud.
+Lalu, kita telah menelaah setiap model penerapan untuk komputasi cloud.
+Terakhir, kita telah menilik manfaat dari komputasi cloud.
+Dengan ringkasan tersebut, diharapkan Anda dapat memahami semua materi yang telah disampaikan. Yuk lanjut ke modul berikutnya!
